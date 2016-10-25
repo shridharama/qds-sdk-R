@@ -80,7 +80,9 @@ def hivecommand(query=None, macros=None, tags=None, sample_size=None, cluster_la
     except Exception:
         traceback.print_exc(file=sys.stderr)
     if command_type is "run":
+        print 'going into run'
         while not Command.is_done(command.status):
+            print 'waiting for command %s to finish'% (str(command.id))
             time.sleep(Qubole.poll_interval)
             command = Command.find(command.id)
         return getcommandresults(command)
