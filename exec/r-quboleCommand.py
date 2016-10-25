@@ -1,3 +1,5 @@
+import pdb
+
 try:
     from qds_sdk.qubole import Qubole
     from qds_sdk.commands import *
@@ -64,7 +66,10 @@ def getlog(commandId):
 #Hive
 def hivecommand(query=None, macros=None, tags=None, sample_size=None, cluster_label=None,
                 notify=None, name=None, script_location=None, print_logs=None, command_type="submit"):
+    
     command = ""
+    print 'Starting hivecommand. COMMAND TYPE == ', command_type
+    pdb.set_trace()
     try:
         command = HiveCommand.create(query=query, macros=macros, tags=tags, sample_size=sample_size,
                                      label=cluster_label,can_notify=notify, name=name, script_location=script_location,
