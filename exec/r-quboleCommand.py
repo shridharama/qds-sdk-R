@@ -1,5 +1,3 @@
-import pdb
-
 try:
     from qds_sdk.qubole import Qubole
     from qds_sdk.commands import *
@@ -68,8 +66,6 @@ def hivecommand(query=None, macros=None, tags=None, sample_size=None, cluster_la
                 notify=None, name=None, script_location=None, print_logs=None, command_type="submit"):
     
     command = ""
-    print 'Starting hivecommand. COMMAND TYPE == ', command_type
-    pdb.set_trace()
     try:
         command = HiveCommand.create(query=query, macros=macros, tags=tags, sample_size=sample_size,
                                      label=cluster_label,can_notify=notify, name=name, script_location=script_location,
@@ -84,10 +80,8 @@ def hivecommand(query=None, macros=None, tags=None, sample_size=None, cluster_la
         sys.stderr.write("Error: %s\n" % str(e))
     except Exception:
         traceback.print_exc(file=sys.stderr)
-    if command_type is "run":
-        print 'going into run'
+    if command_type == "run":
         while not Command.is_done(command.status):
-            print 'waiting for command %s to finish'% (str(command.id))
             time.sleep(Qubole.poll_interval)
             command = Command.find(command.id)
         return getcommandresults(command)
@@ -111,7 +105,7 @@ def prestocommand(query=None, script_location=None, macros=None, tags=None, clus
         sys.stderr.write("Error: %s\n" % str(e))
     except Exception:
         traceback.print_exc(file=sys.stderr)
-    if command_type is "run":
+    if command_type == "run":
         while not Command.is_done(command.status):
             time.sleep(Qubole.poll_interval)
             command = Command.find(command.id)
@@ -139,7 +133,7 @@ def sparkcommand(program=None, cmdline=None, sql=None, script_location=None, mac
         sys.stderr.write("Error: %s\n" % str(e))
     except Exception:
         traceback.print_exc(file=sys.stderr)
-    if command_type is "run":
+    if command_type == "run":
         while not Command.is_done(command.status):
             time.sleep(Qubole.poll_interval)
             command = Command.find(command.id)
